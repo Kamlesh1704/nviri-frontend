@@ -25,7 +25,6 @@ export default function Home() {
   const [technicians, setTechnicians] = useState([]);
   const [appliances, setAppliances] = useState([]);
   const [input, setInput] = useState('');
-  const [applianceVisibility, setApplianceVisibility] = useState(true);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -82,6 +81,9 @@ export default function Home() {
     return appliance.name.toLowerCase().includes(input.toLowerCase());
   });
   
+  const onClickAppliance = (name) => {
+    setInput(name);
+  }
 
   return (
     <div>
@@ -100,13 +102,13 @@ export default function Home() {
             ))}
           </select>
           <div style={{ position: "relative" }}>
-          <input type="text" placeholder="Search Home Appliances" onChange={(e) => setInput(e.target.value)}/>
+          <input type="text" placeholder="Search Home Appliances" value={input} onChange={(e) => setInput(e.target.value)}/>
           <button>Search</button>
           {
-            input.length !== 0 ?   <ul>
+            input.length !== 0?   <ul>
             {
               filteredAppliances.map((appliance) => (
-                <li>{appliance.name}</li>
+                <li onClick={() =>onClickAppliance(appliance.name)}>{appliance.name}</li>
               ))
             }
           </ul>
